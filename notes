@@ -1,0 +1,24 @@
+
+
+npx @modelontextprotocol/inspector
+or
+mcp-inspector
+
+A link like below opens
+http://127.0.0.1:6274/?MCP_INSPECTOR_API_TOKEN=c539b0fa72902d9620003636c3927d7acef30f3b088c17f7b0d46a4a1c4018ef
+or
+http://localhost:6274/
+
+
+
+Flow :
+                MCP Inspector (Tool invocation)
+                      |
+                      |
+                Spring AI MCP Server( STREAMABLE / JSON-RPC)
+                      |
+                      |
+                HelpDeskTools - createTicket() / getTicketStatus()
+                      |
+                      |
+                HelpDeskTicketService → H2 Database
