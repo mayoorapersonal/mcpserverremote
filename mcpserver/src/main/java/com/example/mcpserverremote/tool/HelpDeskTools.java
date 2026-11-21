@@ -7,8 +7,9 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ai.tool.annotation.Tool;
-import org.springframework.ai.tool.annotation.ToolParam;
+import org.springframework.ai.mcp.annotation.McpTool;
+import org.springframework.ai.mcp.annotation.McpToolParam;
+import org.springframework.ai.mcp.annotation.context.McpSyncRequestContext;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,8 +20,8 @@ public class HelpDeskTools {
 
   private final HelpDeskTicketService service;
 
-  @Tool(name = "createTicket", description = "Create the Support Ticket")
-  public String createTicket(@ToolParam(description = "Details to create a Support ticket")
+  @McpTool(name = "createTicket", description = "Create the Support Ticket")
+  public String createTicket(@McpToolParam(description = "Details to create a Support ticket")
   TicketRequest ticketRequest) {
     LOGGER.info("Creating support ticket for user: {} with details: {}", ticketRequest);
     HelpDeskTicket savedTicket = service.createTicket(ticketRequest);
@@ -28,12 +29,15 @@ public class HelpDeskTools {
     return "Ticket #" + savedTicket.getId() + " created successfully for user " + savedTicket.getUsername();
   }
 
-  @Tool(name="getTicketStatus", description = "Fetch the status of the tickets based on a given username")
-  public List<HelpDeskTicket> getTicketStatus(@ToolParam(description =
-      "Username to fetch the status of the help desk tickets") String username) {
+  @McpTool(name="getTicketStatus", description = "Fetch the status of the tickets based on a given username")
+  public List<HelpDeskTicket> getTicketStatus(@McpToolParam(description =
+      "Username to fetch the status of the help desk tickets") String username,
+      McpSyncRequestContext ctx) {
     LOGGER.info("Fetching tickets for user: {}", username);
+    ctx.info("Fetching tickets for user: " + username);
     List<HelpDeskTicket> tickets =  service.getTicketsByUsername(username);
     LOGGER.info("Found {} tickets for user: {}", tickets.size(), username);
+    ctx.info("Found " +tickets.size()+ " tickets for user: " + username);
     return tickets;
   }
 

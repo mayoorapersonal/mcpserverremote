@@ -7,10 +7,15 @@ import org.springframework.ai.tool.ToolCallback;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+/**
+ * Commented out this config class since i am now using
+ * mcptools and mcptoolsparams anotation in the tools class
+ * instead of tools and toolsparam.
+ */
+//@Configuration
 public class McpServerConfig {
-  @Bean
-  List<ToolCallback> toolCallbacks(HelpDeskTools helpDeskTools) {
-    return List.of(ToolCallbacks.from(helpDeskTools));
-  }
+//  @Bean
+//  List<ToolCallback> toolCallbacks(HelpDeskTools helpDeskTools) {
+//    return List.of(ToolCallbacks.from(helpDeskTools));
+//  }
 }
